@@ -10,6 +10,15 @@ The Animated Dropdown Search package is a customizable Flutter widget that allow
 - Highlight selected option
 - Scroll percentage indicator
 
+
+## Screenshot
+
+![Animated Dropdown Search Screenshot](assets/screenshot1.png)
+![Animated Dropdown Search Screenshot](assets/screenshot2.png)
+![Animated Dropdown Search Screenshot](assets/screenshot3.png)
+![Animated Dropdown Search Screenshot](assets/screenshot4.png)
+
+
 ## Installation
 
 Add the following line to your `pubspec.yaml` file:
