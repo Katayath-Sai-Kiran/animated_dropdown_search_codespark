@@ -1,6 +1,6 @@
 name: animated_dropdown_search_codespark
 description: "The AnimatedDropdownSearch package is a powerful and customizable Flutter widget designed to enhance user experience with elegant and animated dropdowns. It provides a seamless way to search and select options from a list, making it an essential tool for developers looking to add sophisticated dropdown functionality to their applications."
-version: 0.0.1
+version: 0.0.2
 homepage: https://github.com/Katayath-Sai-Kiran/animated_dropdown_search_codespark
 
 environment:

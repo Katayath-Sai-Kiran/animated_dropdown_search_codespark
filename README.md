@@ -30,7 +30,7 @@ Add the following line to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  animated_dropdown_search: ^0.0.1
+  animated_dropdown_search: ^0.0.2
 ```
 
 Then run `flutter pub get` to install the package.
