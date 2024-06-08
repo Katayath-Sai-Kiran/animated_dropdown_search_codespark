@@ -2,7 +2,8 @@ Here is a changelog for your Animated Dropdown Search package:
 
 # Changelog
 
-### [0.0.2] - Added Screenshots
+### [0.0.2] 
+##  Added Screenshots
 
 - Added screenshots to enhance visualization of the `AnimatedDropdownSearch` widget in action.
 - Included content in the README highlighting the features and usage of the package, accompanied by screenshots for better illustration.
@@ -10,7 +11,8 @@ Here is a changelog for your Animated Dropdown Search package:
 
 
 This change log reflects the enhancements made in version 0.0.2, focusing on the addition of screenshots and enriched content to improve user understanding and experience with the package.
-## [0.0.1] - Initial Release
+### [0.0.1] 
+## Initial Release
 
 ### Features
 - Smooth dropdown animation for a list of options.
