@@ -11,8 +11,19 @@ Here is a changelog for your Animated Dropdown Search package:
 
 
 This change log reflects the enhancements made in version 0.0.2, focusing on the addition of screenshots and enriched content to improve user understanding and experience with the package.
+
 ### [0.0.1] 
 ## Initial Release
+
+- **Initial Release**: Launched the `AnimatedDropdownSearch` package.
+- **Smooth Animations**: Implemented smooth animations for dropdown opening and closing.
+- **Search Functionality**: Added search capability within the dropdown for quick filtering.
+- **Customizable Styles**: Enabled customization of hint text, option text, borders, and highlight colors.
+- **Selected Option Highlighting**: Highlighted the selected option with a customizable color.
+- **Scroll Percentage Indicator**: Introduced a visual indicator to show the scroll percentage.
+- **Max Height Configuration**: Added the ability to configure the maximum height of the dropdown.
+- **Comprehensive Documentation**: Included detailed documentation and usage examples in the README.
+
 
 ### Features
 - Smooth dropdown animation for a list of options.
