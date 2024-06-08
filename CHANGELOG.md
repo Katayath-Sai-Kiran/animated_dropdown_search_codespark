@@ -2,6 +2,12 @@ Here is a changelog for your Animated Dropdown Search package:
 
 # Changelog
 
+### [0.0.3]
+
+- **Example File Added**: Included a comprehensive example file demonstrating the usage of the `AnimatedDropdownSearch` widget.
+- **Description Updated**: Updated the package description to provide a clearer and more concise overview.
+- **Performance Improvements**: Made several performance enhancements to ensure smoother animations and faster dropdown operations.
+
 ### [0.0.2] 
 ##  Added Screenshots
 

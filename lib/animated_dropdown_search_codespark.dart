@@ -60,15 +60,11 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
   Widget build(BuildContext context) {
     double maxHeight =
         widget.maxHeightForOptions ?? MediaQuery.sizeOf(context).height * 0.4;
-    List<String> cities = widget.data;
+    List<String> data = widget.data;
     if (query.isNotEmpty && selectedCity?.toLowerCase() != query) {
-      cities =
-          cities.where((city) => city.toLowerCase().contains(query)).toList();
+      data = data.where((city) => city.toLowerCase().contains(query)).toList();
     }
-    bool hasNoResults = false;
-    if (query.isNotEmpty && cities.isEmpty) {
-      hasNoResults = true;
-    }
+    bool hasNoResults = query.isNotEmpty && data.isEmpty;
     return Stack(
       clipBehavior: Clip.none,
       children: [
@@ -103,13 +99,14 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
                       controller: _scrollController,
                       padding: const EdgeInsets.all(8),
                       itemBuilder: (context, index) {
-                        bool isSelected = cities[index] == selectedCity;
+                        bool isSelected = data[index] == selectedCity;
                         return InkWell(
                           onTap: () {
-                            widget.onSelected(cities[index]);
+                            widget.onSelected(data[index]);
                             setState(() {
                               isOptionsOpen = !isOptionsOpen;
-                              selectedCity = cities[index];
+                              selectedCity = data[index];
+                              _searchController.text = selectedCity!;
                             });
                           },
                           borderRadius: BorderRadius.circular(10),
@@ -124,7 +121,7 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
                                   Container(
                                     decoration: BoxDecoration(
                                       color: widget.selectedHighlightColor ??
-                                          Colors.yellow,
+                                          Colors.yellow[700],
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     width: 5,
@@ -133,7 +130,7 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
                                 Padding(
                                   padding: const EdgeInsets.all(12.0),
                                   child: Text(
-                                    cities[index],
+                                    data[index],
                                     style: widget.optionTextStyle ??
                                         TextStyle(
                                           fontWeight: isSelected
@@ -147,7 +144,7 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
                           ),
                         );
                       },
-                      itemCount: cities.length,
+                      itemCount: data.length,
                     ),
             );
           },
@@ -167,7 +164,8 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
               height: 45,
               width: percentage,
               decoration: BoxDecoration(
-                color: widget.scrollPercentageColorIndicator ?? Colors.red,
+                color:
+                    widget.scrollPercentageColorIndicator ?? Colors.yellow[700],
                 borderRadius: BorderRadius.circular(10),
               ),
             );
@@ -196,6 +194,7 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
                           setState(() {
                             _searchFieldFocusNode.unfocus();
                             _searchController.clear();
+                            selectedCity = null;
                             isOptionsOpen = !isOptionsOpen;
                           });
                         }
