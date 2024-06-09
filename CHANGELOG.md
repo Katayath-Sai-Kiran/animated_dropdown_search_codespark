@@ -2,6 +2,10 @@ Here is a changelog for your Animated Dropdown Search package:
 
 # Changelog
 
+### [0.0.5]
+
+- **Fixed Screenshots Url**: Fixed Screenshot Uri issue
+
 ### [0.0.4]
 
 - **Fixed Selected Option**: Fixed selection option value in textformfield
@@ -14,7 +18,7 @@ Here is a changelog for your Animated Dropdown Search package:
 - **Performance Improvements**: Made several performance enhancements to ensure smoother animations and faster dropdown operations.
 
 ### [0.0.2] 
-cd 
+
 - Added screenshots to enhance visualization of the `AnimatedDropdownSearch` widget in action.
 - Included content in the README highlighting the features and usage of the package, accompanied by screenshots for better illustration.
 - Updated the README to provide a comprehensive overview of the package and its capabilities.
