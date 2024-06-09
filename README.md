@@ -14,13 +14,13 @@ The Animated Dropdown Search package is a customizable Flutter widget that allow
 ## Screenshot
 
 
-<img src="assets/screenshot1.png" alt="Animated Dropdown Search Screenshot" width="300">
+<img src="https://github.com/Katayath-Sai-Kiran/animated_dropdown_search_codespark/blob/main/assets/screenshot1.png" alt="Animated Dropdown Search Screenshot" width="300">
 
-<img src="assets/screenshot2.png" alt="Animated Dropdown Search Screenshot" width="300">
+<img src="https://github.com/Katayath-Sai-Kiran/animated_dropdown_search_codespark/blob/main/assets/screenshot2.png" alt="Animated Dropdown Search Screenshot" width="300">
 
-<img src="assets/screenshot3.png" alt="Animated Dropdown Search Screenshot" width="300">
+<img src="https://github.com/Katayath-Sai-Kiran/animated_dropdown_search_codespark/blob/main/assets/screenshot3.png" alt="Animated Dropdown Search Screenshot" width="300">
 
-<img src="assets/screenshot4.png" alt="Animated Dropdown Search Screenshot" width="300">
+<img src="https://github.com/Katayath-Sai-Kiran/animated_dropdown_search_codespark/blob/main/assets/screenshot4.png" alt="Animated Dropdown Search Screenshot" width="300">
 
 
 
