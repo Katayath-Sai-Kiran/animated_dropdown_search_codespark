@@ -81,6 +81,7 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+```
 
 ## Highlighted Matched Text
 
@@ -97,7 +98,6 @@ AnimatedDropdownSearch(
 );
 ```
 
-```
 
 ## Parameters
 
