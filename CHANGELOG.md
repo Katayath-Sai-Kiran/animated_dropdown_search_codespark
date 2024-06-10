@@ -2,6 +2,13 @@ Here is a changelog for your Animated Dropdown Search package:
 
 # Changelog
 
+### [0.0.6]
+
+- **Highlighted Matched Text**: Added the ability to highlight matched text in the dropdown options based on the search query.
+- **Customizable Highlight Color**: Introduced `matchedTextHighlightColor` property for setting the color of the highlighted text.
+- **Minimum Characters to Highlight**: Added `minCharactersToHighlight` property to specify the minimum number of characters before highlighting matched text.
+
+
 ### [0.0.5]
 
 - **Fixed Screenshots Url**: Fixed Screenshot Uri issue
