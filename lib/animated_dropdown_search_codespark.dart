@@ -1,3 +1,4 @@
+import 'package:entry/entry.dart';
 import 'package:flutter/material.dart';
 
 /// A customizable dropdown search widget with animated opening and closing, search functionality,
@@ -134,6 +135,14 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
   }
 
   ListView optionsListviewWidget(List<String> data) {
+    /// sort options alphabetically and move selected one to top
+    if (selectedCity != null) {
+      data.sort((a, b) {
+        if (a == selectedCity) return -1; // 'a' should come before 'b'
+        if (b == selectedCity) return 1; // 'b' should come after 'a'
+        return a.compareTo(b); // Alphabetical order
+      });
+    }
     return ListView.builder(
       controller: _scrollController,
       padding: const EdgeInsets.all(8),
@@ -142,17 +151,22 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
                 (query.length >= (widget.minCharactersToHighlight ?? 3))) &&
             widget.shouldHighlightMatchedText == true;
         final bool isSelected = data[index] == selectedCity;
-        return InkWell(
-          onTap: () {
-            widget.onSelected(data[index]);
-            setState(() {
-              isOptionsOpen = !isOptionsOpen;
-              selectedCity = data[index];
-              _searchController.text = selectedCity!;
-            });
-          },
-          borderRadius: BorderRadius.circular(10),
-          child: optionsCard(isSelected, shouldHighlightText, data, index),
+        return Entry.offset(
+          yOffset: index == 0 ? 0 : 5,
+          key: UniqueKey(),
+          delay: Duration(milliseconds: index == 0 ? 0 : index * 20),
+          child: InkWell(
+            onTap: () {
+              widget.onSelected(data[index]);
+              setState(() {
+                isOptionsOpen = !isOptionsOpen;
+                selectedCity = data[index];
+                _searchController.text = selectedCity!;
+              });
+            },
+            borderRadius: BorderRadius.circular(10),
+            child: optionsCard(isSelected, shouldHighlightText, data, index),
+          ),
         );
       },
       itemCount: data.length,

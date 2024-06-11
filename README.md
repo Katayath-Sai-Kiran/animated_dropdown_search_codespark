@@ -5,10 +5,19 @@ The Animated Dropdown Search package is a customizable Flutter widget that allow
 ## Features
 
 - Smooth dropdown animation
-- Search functionality within the dropdown
+- Search functionality within the dropdown to filter options.
+- Scroll percentage indicator with customizable color.
+- Callback function to handle the selection of an option.
 - Customizable styles for hint text, option text, borders, and more
 - Highlight selected option
-- Scroll percentage indicator
+- Smooth dropdown animation for a list of options.
+- Customizable hint text and hint text style.
+- Customizable option text style.
+- Highlighting of the selected option with a customizable color.
+- Configurable maximum height for the dropdown options.
+- Customizable border for the search field.
+- Selected Item Sorting: Ensures that the selected item appears at the top of the dropdown list, with the remaining items sorted alphabetically.
+- Entry Animations: Adds entry animations to dropdown items with a cascading effect.
 
 
 ## Screenshot
@@ -30,7 +39,7 @@ Add the following line to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  animated_dropdown_search: ^0.0.6
+  animated_dropdown_search: ^0.0.8
 ```
 
 Then run `flutter pub get` to install the package.

@@ -2,6 +2,16 @@ Here is a changelog for your Animated Dropdown Search package:
 
 # Changelog
 
+### [0.0.8]
+
+- **Added Selected Item Sorting**: Ensured that the selected item is placed at the top of the dropdown list, with the remaining items sorted alphabetically.
+- **Added Entry Animations**: Implemented entry animations for the dropdown items, adding a delay and offset for each item to create a cascading effect.
+
+
+### [0.0.7]
+
+- **Improvements**: Performance Improvements
+
 ### [0.0.6]
 
 - **Highlighted Matched Text**: Added the ability to highlight matched text in the dropdown options based on the search query.

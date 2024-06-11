@@ -1,7 +1,7 @@
 name: animated_dropdown_search_codespark
 description: "Empower your app with a sophisticated dropdown widget, featuring search and highlighting."
 
-version: 0.0.6
+version: 0.0.7
 homepage: https://github.com/Katayath-Sai-Kiran/animated_dropdown_search_codespark
 
 environment:
@@ -9,6 +9,7 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
+  entry: ^1.0.0
   flutter:
     sdk: flutter
 
@@ -23,8 +24,15 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
 
-  assets:
-    - assets/
+screenshots:
+ - description: 'Home Page'
+   path: assets/screenshot1.png
+ - description: 'Focused State'
+   path: assets/screenshot2.png
+ - description: 'Selected'
+   path: assets/screenshot3.png
+ - description: 'Percentage indicator'
+   path: assets/screenshot4.png
   
   # For details regarding assets in packages, see
   # https://flutter.dev/assets-and-images/#from-packages
