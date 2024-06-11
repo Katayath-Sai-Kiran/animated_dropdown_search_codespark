@@ -1,7 +1,7 @@
 name: animated_dropdown_search_codespark
 description: "Empower your app with a sophisticated dropdown widget, featuring search and highlighting."
 
-version: 0.0.9
+version: 0.1.0
 homepage: https://github.com/Katayath-Sai-Kiran/animated_dropdown_search_codespark
 
 environment:
@@ -27,25 +27,28 @@ flutter:
 screenshots:
   - description: 'Home Page - The main page with the Animated Dropdown Search widget in its default state, showing the initial layout and appearance within the app.'
     path: assets/screenshot1.png
+    width: 300
+
   - description: 'Focused State - The widget with the search field focused, ready for input, and the dropdown options starting to appear.'
     path: assets/screenshot2.png
+    width: 300
+
   - description: 'Selected - The dropdown with an item selected, showing the selected item at the top and the rest sorted alphabetically.'
     path: assets/screenshot3.png
+    width: 300
+
   - description: 'Percentage Indicator - The visual scroll percentage indicator in action, showing the user’s position within the dropdown options.'
     path: assets/screenshot4.png
+    width: 300
+
 
 topics:
-  - Flutter
-  - Dart
-  - UI Components
-  - Dropdown Menu
-  - Animation
-  - Search Functionality
-  - Custom Widgets
-  - User Interface
-  - Highlighting
-  - Interactive Widgets
-  - Sorting
+
+  - dropdownmenu
+  - animation
+  - searchfunctionality
+  - highlighting
+  - sorting
 
 
   # For details regarding assets in packages, see

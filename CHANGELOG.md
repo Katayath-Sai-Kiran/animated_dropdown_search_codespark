@@ -2,6 +2,12 @@ Here is a changelog for your Animated Dropdown Search package:
 
 # Changelog
 
+
+### [0.1.0]
+
+- **Bug Fixes**: Addressed and resolved various bugs to improve the stability and performance of the `AnimatedDropdownSearch` package. These fixes ensure smoother animations, better handling of edge cases in the dropdown behavior, and improved overall user experience.
+
+
 ### [0.0.9]
 
 - **Topics Added**: Added relevant topics to the package metadata for better categorization and discoverability, including Flutter, Dart, UI Components, Dropdown Menu, Animation, Search Functionality, Custom Widgets, User Interface, Highlighting, Interactive Widgets, and Sorting.
