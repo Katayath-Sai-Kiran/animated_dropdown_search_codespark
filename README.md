@@ -23,15 +23,10 @@ The Animated Dropdown Search package is a customizable Flutter widget that allow
 ## Screenshot
 
 
-![Screenshot 1](https://drive.google.com/file/d/1LL-WWbkRALHrwB29B3Bx9WwRRnqDBnFj/view?usp=drive_link)
-
-<img src="https://drive.google.com/file/d/1LL-WWbkRALHrwB29B3Bx9WwRRnqDBnFj/view?usp=drive_link" alt="Animated Dropdown Search Screenshot" width="300">
-
-<img src="https://github.com/Katayath-Sai-Kiran/animated_dropdown_search_codespark/blob/main/assets/screenshot3.png" alt="Animated Dropdown Search Screenshot" width="300">
-
-<img src="https://github.com/Katayath-Sai-Kiran/animated_dropdown_search_codespark/blob/main/assets/screenshot4.png" alt="Animated Dropdown Search Screenshot" width="300">
-
-
+![Screenshot 1](assets/screenshot1.png)
+![Screenshot 2](assets/screenshot2.png)
+![Screenshot 3](assets/screenshot3.png)
+![Screenshot 4](assets/screenshot4.png)
 
 ## Installation
 
@@ -39,7 +34,7 @@ Add the following line to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  animated_dropdown_search: ^0.0.8
+  animated_dropdown_search: ^0.0.9
 ```
 
 Then run `flutter pub get` to install the package.

@@ -2,6 +2,11 @@ Here is a changelog for your Animated Dropdown Search package:
 
 # Changelog
 
+### [0.0.9]
+
+- **Topics Added**: Added relevant topics to the package metadata for better categorization and discoverability, including Flutter, Dart, UI Components, Dropdown Menu, Animation, Search Functionality, Custom Widgets, User Interface, Highlighting, Interactive Widgets, and Sorting.
+
+
 ### [0.0.8]
 
 - **Added Selected Item Sorting**: Ensured that the selected item is placed at the top of the dropdown list, with the remaining items sorted alphabetically.
