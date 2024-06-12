@@ -2,6 +2,16 @@ Here is a changelog for your Animated Dropdown Search package:
 
 # Changelog
 
+### [1.0.0]
+
+
+1. **Adaptive Dropdown Positioning:**
+   - **Feature:** The dropdown menu now adjusts its position to display either above or below the search field based on the available space.
+   - **Details:** Implemented logic to determine the position of the search field and decide if the dropdown should be displayed at the top or bottom to maximize visibility and usability.
+
+2. **Overlay Support:**
+   - **Feature:** Integrated overlay support to ensure the dropdown menu appears on top of other widgets.
+   - **Details:** Utilized `OverlayPortalController` for managing the visibility of the dropdown menu, providing a seamless user experience where the dropdown remains accessible and visible regardless of other UI elements.
 
 ### [0.1.0]
 
@@ -68,6 +78,7 @@ This change log reflects the enhancements made in version 0.0.2, focusing on the
 
 
 ### Features
+
 - Smooth dropdown animation for a list of options.
 - Search functionality within the dropdown to filter options.
 - Customizable hint text and hint text style.
@@ -77,11 +88,11 @@ This change log reflects the enhancements made in version 0.0.2, focusing on the
 - Scroll percentage indicator with customizable color.
 - Customizable border for the search field.
 - Callback function to handle the selection of an option.
+- Adaptive dropdown positioning based on available space (top/bottom).
+- Overlay support to ensure dropdown menu appears on top of other widgets.
 
-## Future Versions
 
 ### Planned Features
-- Change the expanded nature of the options list to an overlay nature to improve UI/UX and avoid layout issues.
 - Additional customization options for dropdown animations and styles.
 - Accessibility improvements and support for different languages.
 - Performance optimizations and bug fixes.

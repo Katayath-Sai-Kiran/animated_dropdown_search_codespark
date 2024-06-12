@@ -19,6 +19,7 @@ class AnimatedDropdownSearch extends StatefulWidget {
     this.minCharactersToHighlight,
     this.shouldHighlightMatchedText,
     this.matchedTextHighlightColor,
+    this.enableAdaptivePositioning,
   });
 
   /// List of strings to display in the dropdown.
@@ -39,26 +40,29 @@ class AnimatedDropdownSearch extends StatefulWidget {
   /// Color for the selected option highlight.
   final Color? selectedHighlightColor;
 
-  /// Boolean to enable/disable search functionality.
-  final bool? enableSearch;
-
-  /// Maximum height for the options dropdown.
-  final double? maxHeightForOptions;
-
   /// Color for the scroll percentage indicator.
   final Color? scrollPercentageColorIndicator;
 
-  /// Input border for the search field.
-  final InputBorder? border;
+  /// Color for the matched text highlight.
+  final Color? matchedTextHighlightColor;
 
-  /// Minimum number of characters before highlighting matched text.
-  final int? minCharactersToHighlight;
+  /// Boolean to enable/disable search functionality.
+  final bool? enableSearch;
+
+  /// Boolean to enable/disable adaptive positioning on the options based on the available space and maxheight (top/bottom)
+  final bool? enableAdaptivePositioning;
 
   /// Boolean to enable/disable highlighting matched text.
   final bool? shouldHighlightMatchedText;
 
-  /// Color for the matched text highlight.
-  final Color? matchedTextHighlightColor;
+  /// Maximum height for the options dropdown.
+  final double? maxHeightForOptions;
+
+  /// Minimum number of characters before highlighting matched text.
+  final int? minCharactersToHighlight;
+
+  /// Input border for the search field.
+  final InputBorder? border;
 
   @override
   State<AnimatedDropdownSearch> createState() => _AnimatedDropdownSearchState();
@@ -74,6 +78,10 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
   String? selectedCity;
   double scrollPercentage = 0;
   double percentage = 0;
+
+  final GlobalKey _searchFieldKey = GlobalKey();
+
+  final OverlayPortalController _tooltipController = OverlayPortalController();
 
   @override
   void initState() {
@@ -94,48 +102,24 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
 
   @override
   Widget build(BuildContext context) {
+    Offset? position;
+    bool shouldDisplayTop = false;
     double maxHeight =
         widget.maxHeightForOptions ?? MediaQuery.sizeOf(context).height * 0.4;
-    List<String> data = widget.data;
+    List<String> data = List.from(widget.data);
 
     // Filter the data based on the query
-
     if (query.isNotEmpty && selectedCity?.toLowerCase() != query) {
       data = data.where((city) => city.toLowerCase().contains(query)).toList();
     }
-    bool hasNoResults = query.isNotEmpty && data.isEmpty;
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
-        TweenAnimationBuilder(
-          duration: const Duration(milliseconds: 200),
-          tween: Tween<double>(
-              begin: isOptionsOpen ? maxHeight : 0,
-              end: isOptionsOpen ? maxHeight : 65),
-          builder: (context, value, child) {
-            return Container(
-              padding: const EdgeInsets.only(top: 65),
-              clipBehavior: Clip.none,
-              constraints: BoxConstraints(maxHeight: maxHeight),
-              decoration: BoxDecoration(
-                color: Colors.grey.shade300,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              height: value,
-              child: hasNoResults
-                  ? noResultsWidget(context)
-                  : optionsListviewWidget(data),
-            );
-          },
-        ),
-        if (isOptionsOpen) scroolPercentageWidget(),
-        searchFieldWidget(),
-      ],
-    );
-  }
 
-  ListView optionsListviewWidget(List<String> data) {
-    /// sort options alphabetically and move selected one to top
+    final double height = MediaQuery.sizeOf(context).height;
+    bool hasNoResults = query.isNotEmpty && data.isEmpty;
+    if (isOptionsOpen) {
+      RenderBox? renderBox =
+          _searchFieldKey.currentContext?.findRenderObject() as RenderBox;
+      position = renderBox.localToGlobal(Offset.zero);
+    }
     if (selectedCity != null) {
       data.sort((a, b) {
         if (a == selectedCity) return -1; // 'a' should come before 'b'
@@ -143,33 +127,99 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
         return a.compareTo(b); // Alphabetical order
       });
     }
-    return ListView.builder(
-      controller: _scrollController,
-      padding: const EdgeInsets.all(8),
-      itemBuilder: (context, index) {
-        final bool shouldHighlightText = (query.isNotEmpty &&
-                (query.length >= (widget.minCharactersToHighlight ?? 3))) &&
-            widget.shouldHighlightMatchedText == true;
-        final bool isSelected = data[index] == selectedCity;
-        return Entry.offset(
-          yOffset: index == 0 ? 0 : 5,
-          key: UniqueKey(),
-          delay: Duration(milliseconds: index == 0 ? 0 : index * 20),
-          child: InkWell(
-            onTap: () {
-              widget.onSelected(data[index]);
-              setState(() {
-                isOptionsOpen = !isOptionsOpen;
-                selectedCity = data[index];
-                _searchController.text = selectedCity!;
-              });
-            },
-            borderRadius: BorderRadius.circular(10),
-            child: optionsCard(isSelected, shouldHighlightText, data, index),
+
+    if (position != null && widget.enableAdaptivePositioning == true) {
+      if ((height - position.dy) < maxHeight) {
+        shouldDisplayTop = true;
+      }
+    }
+
+    return Column(
+      children: [
+        OverlayPortal(
+          controller: _tooltipController,
+          overlayChildBuilder: (context) => Positioned(
+            left: 0,
+            right: 0,
+            bottom: shouldDisplayTop ? height - (position?.dy ?? 0) - 10 : null,
+            top: shouldDisplayTop
+                ? null
+                : position != null && isOptionsOpen && position.dy > 0
+                    ? (position.dy + 50)
+                    : null,
+            child: TweenAnimationBuilder(
+              duration: const Duration(milliseconds: 200),
+              tween: Tween<double>(
+                  begin: isOptionsOpen ? 0 : maxHeight,
+                  end: isOptionsOpen ? maxHeight : 0),
+              builder: (context, value, child) {
+                return Container(
+                  margin: const EdgeInsets.all(16),
+                  clipBehavior: Clip.antiAlias,
+                  constraints: BoxConstraints(maxHeight: value),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade300,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: hasNoResults
+                      ? noResultsWidget(context)
+                      : optionsListviewWidget(data),
+                );
+              },
+            ),
           ),
-        );
-      },
-      itemCount: data.length,
+          child: searchFieldWidget(),
+        ),
+      ],
+    );
+  }
+
+  Widget optionsListviewWidget(List<String> data) {
+    List<String> options = List.from(data);
+    // options.sort();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        scroolPercentageWidget(),
+        Expanded(
+          child: ListView.builder(
+            shrinkWrap: true,
+            controller: _scrollController,
+            padding: const EdgeInsets.all(8),
+            itemBuilder: (context, index) {
+              final bool isSelected = options[index] == selectedCity;
+              final bool shouldHighlightText = (query.isNotEmpty &&
+                      (query.length >=
+                          (widget.minCharactersToHighlight ?? 3))) &&
+                  widget.shouldHighlightMatchedText == true &&
+                  !isSelected;
+
+              return Entry.offset(
+                yOffset: index == 0 ? 0 : 5,
+                key: UniqueKey(),
+                delay: Duration(milliseconds: index == 0 ? 0 : index * 20),
+                child: InkWell(
+                  onTap: () {
+                    widget.onSelected(options[index]);
+                    setState(() {
+                      _tooltipController.toggle();
+                      isOptionsOpen = !isOptionsOpen;
+                      selectedCity = options[index];
+                      _searchController.text = selectedCity!;
+                    });
+                  },
+                  borderRadius: BorderRadius.circular(10),
+                  child: optionsCard(
+                      isSelected, shouldHighlightText, options, index),
+                ),
+              );
+            },
+            itemCount: data.length,
+          ),
+        ),
+      ],
     );
   }
 

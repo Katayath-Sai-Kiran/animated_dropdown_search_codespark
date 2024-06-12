@@ -27,7 +27,14 @@ The Animated Dropdown Search package is a customizable Flutter widget that allow
 ![Screenshot 2](assets/screenshot2.png)
 ![Screenshot 3](assets/screenshot3.png)
 ![Screenshot 4](assets/screenshot4.png)
-<img src="assets/screenshot1.png" alt="Screenshot 1" width="300"/>
+
+
+<p align="center">
+  <img src="assets/screenshot1.png" alt="Screenshot 1" width="400"/>
+  <img src="assets/screenshot2.png" alt="Screenshot 2" width="400"/>
+  <img src="assets/screenshot3.png" alt="Screenshot 3" width="400"/>
+  <img src="assets/screenshot4.png" alt="Screenshot 4" width="400"/>
+</p>
 
 
 ## Installation
@@ -128,7 +135,7 @@ Here is another example with more customization options:
 
 ```dart
 import 'package:flutter/material.dart';
-import 'animated_dropdown_search.dart'; // Import the package
+import 'package:animated_dropdown_search_codespark/animated_dropdown_search_codespark.dart'; // Import the package
 
 void main() {
   runApp(MyApp());
