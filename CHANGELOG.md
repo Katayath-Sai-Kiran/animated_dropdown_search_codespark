@@ -3,6 +3,22 @@ Here is a changelog for your Animated Dropdown Search package:
 # Changelog
 
 
+### [1.0.5]
+
+ - **Fixed Screenshots:** Fixed screenshots rendering issue
+
+### [1.0.4]
+
+ - **Fixed Screenshots:** Fixed screenshots rendering issue
+
+### [1.0.3]
+
+ - **Fixed Screenshots:** Fixed screenshots rendering issue
+
+### [1.0.2]
+
+ - **Fixed Screenshots:** Fixed screenshots rendering issue
+
 ### [1.0.1]
 
  - **Fixed Screenshots:** Fixed screenshots rendering issue
