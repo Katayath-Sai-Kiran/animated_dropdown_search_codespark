@@ -30,6 +30,9 @@ The Animated Dropdown Search package is a customizable Flutter widget that allow
 ![Screenshot 6](assets/screenshot7.png =300x)
 ![Screenshot 7](assets/screenshot8.png =300x)
 
+<img src="assets/screenshot1.png" width="300" height="650" alt="screenshot1"/>
+
+
 ## Installation
 
 Add the following line to your `pubspec.yaml` file:
