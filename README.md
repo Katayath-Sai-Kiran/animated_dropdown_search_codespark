@@ -27,16 +27,14 @@ The Animated Dropdown Search package is a customizable Flutter widget that allow
 ![Screenshot 2](assets/screenshot2.png)
 ![Screenshot 3](assets/screenshot3.png)
 ![Screenshot 4](assets/screenshot4.png)
-
+<img src="assets/screenshot1.png" alt="Screenshot 1" width="300"/>
 
 <p align="center">
-  <img src="assets/screenshot1.png" alt="Screenshot 1" width="400"/>
-  <img src="assets/screenshot2.png" alt="Screenshot 2" width="400"/>
-  <img src="assets/screenshot3.png" alt="Screenshot 3" width="400"/>
-  <img src="assets/screenshot4.png" alt="Screenshot 4" width="400"/>
+  <img src="assets/screenshot1.png" alt="Screenshot 1" width="300"/>
+  <img src="assets/screenshot2.png" alt="Screenshot 2" width="300"/>
+  <img src="assets/screenshot3.png" alt="Screenshot 3" width="300"/>
+  <img src="assets/screenshot4.png" alt="Screenshot 4" width="300"/>
 </p>
-
-
 ## Installation
 
 Add the following line to your `pubspec.yaml` file:
