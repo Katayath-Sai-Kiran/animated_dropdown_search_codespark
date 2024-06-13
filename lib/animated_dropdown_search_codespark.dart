@@ -134,6 +134,13 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
       }
     }
 
+    final double? bottom =
+        shouldDisplayTop ? height - (position?.dy ?? 0) - 10 : null;
+    final double? top = shouldDisplayTop
+        ? null
+        : position != null && isOptionsOpen && position.dy > 0
+            ? (position.dy + 50)
+            : null;
     return Column(
       children: [
         OverlayPortal(
@@ -141,12 +148,8 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
           overlayChildBuilder: (context) => Positioned(
             left: 0,
             right: 0,
-            bottom: shouldDisplayTop ? height - (position?.dy ?? 0) - 10 : null,
-            top: shouldDisplayTop
-                ? null
-                : position != null && isOptionsOpen && position.dy > 0
-                    ? (position.dy + 50)
-                    : null,
+            bottom: bottom,
+            top: top,
             child: TweenAnimationBuilder(
               duration: const Duration(milliseconds: 200),
               tween: Tween<double>(

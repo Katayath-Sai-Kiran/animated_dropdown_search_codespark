@@ -27,15 +27,17 @@ class MyApp extends StatelessWidget {
             child: AnimatedDropdownSearch(
               data: data,
               onSelected: (value) {
-                print("Selected value: $value");
+                debugPrint("Selected value: $value");
               },
               hint: "Search city...",
               enableSearch: true,
+              enableAdaptivePositioning: true,
+              minCharactersToHighlight: 3,
               shouldHighlightMatchedText: true,
               matchedTextHighlightColor: Colors.red,
-              selectedHighlightColor: Colors.yellow,
+              selectedHighlightColor: Colors.red,
               maxHeightForOptions: 200,
-              scrollPercentageColorIndicator: Colors.green,
+              scrollPercentageColorIndicator: Colors.red,
               border: OutlineInputBorder(
                 borderSide: const BorderSide(color: Colors.blue),
                 borderRadius: BorderRadius.circular(10),

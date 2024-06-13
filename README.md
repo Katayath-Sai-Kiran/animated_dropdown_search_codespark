@@ -20,7 +20,7 @@ The Animated Dropdown Search package is a customizable Flutter widget that allow
 - Entry Animations: Adds entry animations to dropdown items with a cascading effect.
 
 
-## Screenshot
+<!-- ## Screenshot
 
 ![Screenshot 1](assets/screenshot1.png)
 ![Screenshot 2](assets/screenshot3.png)
@@ -29,7 +29,7 @@ The Animated Dropdown Search package is a customizable Flutter widget that allow
 ![Screenshot 5](assets/screenshot6.png)
 ![Screenshot 6](assets/screenshot7.png)
 ![Screenshot 7](assets/screenshot8.png)
-![Screenshot 8](assets/screenshot2.png)
+![Screenshot 8](assets/screenshot2.png) -->
 
 
 
@@ -40,7 +40,7 @@ Add the following line to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  animated_dropdown_search: ^1.0.6
+  animated_dropdown_search: ^1.0.7
 ```
 
 Then run `flutter pub get` to install the package.
