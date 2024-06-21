@@ -254,9 +254,19 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
                       children: [
                         Text(selectedCities[index]),
                         const SizedBox(width: 4),
-                        const Icon(
-                          Icons.close,
-                          size: 16,
+                        GestureDetector(
+                          onTap: () {
+                            if (widget.canSelectMultiple) {
+                              setState(() {
+                                selectedCities.remove(selectedCities[index]);
+                              });
+                              widget.onSelectedMultiple!(selectedCities);
+                            }
+                          },
+                          child: const Icon(
+                            Icons.close,
+                            size: 16,
+                          ),
                         )
                       ],
                     ))),
