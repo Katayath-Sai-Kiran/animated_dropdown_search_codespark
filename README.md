@@ -1,3 +1,4 @@
+
 # Animated Dropdown Search
 
 The Animated Dropdown Search package is a customizable Flutter widget that allows users to search and select from a list of options with a smooth animation. This package is perfect for applications that need an elegant and user-friendly dropdown search functionality.
@@ -20,19 +21,13 @@ The Animated Dropdown Search package is a customizable Flutter widget that allow
 - Entry Animations: Adds entry animations to dropdown items with a cascading effect.
 
 
-<!-- ## Screenshot
+## Screenshot
 
-![Screenshot 1](assets/screenshot1.png)
-![Screenshot 2](assets/screenshot3.png)
-![Screenshot 3](assets/screenshot4.png)
-![Screenshot 4](assets/screenshot5.png)
-![Screenshot 5](assets/screenshot6.png)
-![Screenshot 6](assets/screenshot7.png)
-![Screenshot 7](assets/screenshot8.png)
-![Screenshot 8](assets/screenshot2.png) -->
-
-
-
+<img src="https://raw.githubusercontent.com/Katayath-Sai-Kiran/read_more_codespark/main/assets/300x650-02.png" alt="Screenshot 1" width="150"/>
+<img src="https://raw.githubusercontent.com/Katayath-Sai-Kiran/read_more_codespark/main/assets/300x650-03.png" alt="Screenshot 2" width="150"/>
+<img src="https://raw.githubusercontent.com/Katayath-Sai-Kiran/read_more_codespark/main/assets/300x650-05.png" alt="Screenshot 3" width="150"/>
+<img src="https://raw.githubusercontent.com/Katayath-Sai-Kiran/read_more_codespark/main/assets/300x650-06.png" alt="Screenshot 4" width="150"/>
+<img src="https://raw.githubusercontent.com/Katayath-Sai-Kiran/read_more_codespark/main/assets/300x650-07.png" alt="Screenshot 5" width="150"/>
 
 ## Installation
 
@@ -40,14 +35,16 @@ Add the following line to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  animated_dropdown_search: ^1.0.7
+  animated_dropdown_search: ^latest_version
 ```
 
 Then run `flutter pub get` to install the package.
 
 ## Usage
 
-Here is a simple example of how to use the Animated Dropdown Search widget:
+### Single Selection Mode
+
+Here is a simple example of how to use the Animated Dropdown Search widget in single selection mode:
 
 ```dart
 import 'package:flutter/material.dart';
@@ -93,6 +90,54 @@ class MyApp extends StatelessWidget {
 }
 ```
 
+### Multiple Selection Mode
+
+Here's an example of how to use the `AnimatedDropdownSearch` widget in multiple selection mode:
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:animated_dropdown_search_codespark/animated_dropdown_search_codespark.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  final List<String> data = ["New York", "Los Angeles", "Chicago", "Houston", "Phoenix"];
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(title: Text("Animated Dropdown Search Example")),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: AnimatedDropdownSearch.multiple(
+              data: data,
+              onSelected: (List<String> values) {
+                print("Selected values: $values");
+              },
+              hint: "Search city...",
+              enableSearch: true,
+              shouldHighlightMatchedText: true,
+              matchedTextHighlightColor: Colors.red,
+              selectedHighlightColor: Colors.yellow,
+              maxHeightForOptions: 200,
+              scrollPercentageColorIndicator: Colors.green,
+              border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blue),
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+```
+
 ## Highlighted Matched Text
 
 To highlight the matched text while searching, set `shouldHighlightMatchedText` to `true` and specify a `matchedTextHighlightColor`. This feature highlights the matched part of the options based on the search query.
@@ -108,11 +153,11 @@ AnimatedDropdownSearch(
 );
 ```
 
-
 ## Parameters
 
 - `data` (List<String>): The list of strings to display in the dropdown.
 - `onSelected` (Function(String val)): Callback function when an item is selected.
+- `onSelectedMultiple` (Function(List<String> val)): Callback function when items are selected (for multiple selection mode).
 - `hint` (String?): Placeholder text for the search field.
 - `hintStyle` (TextStyle?): Style for the hint text.
 - `optionTextStyle` (TextStyle?): Style for the dropdown options.
@@ -125,14 +170,13 @@ AnimatedDropdownSearch(
 - `shouldHighlightMatchedText` (bool?): Boolean to enable/disable highlighting matched text.
 - `matchedTextHighlightColor` (Color?): Color for the matched text highlight.
 
-
 ## Example
 
 Here is another example with more customization options:
 
 ```dart
 import 'package:flutter/material.dart';
-import 'package:animated_dropdown_search_codespark/animated_dropdown_search_codespark.dart'; // Import the package
+import 'package:animated_dropdown_search_codespark/animated_dropdown_search_codespark.dart';
 
 void main() {
   runApp(MyApp());
@@ -175,7 +219,3 @@ class MyApp extends StatelessWidget {
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-
-
-

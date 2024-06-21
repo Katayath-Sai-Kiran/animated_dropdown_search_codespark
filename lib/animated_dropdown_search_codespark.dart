@@ -1,14 +1,13 @@
 import 'package:entry/entry.dart';
 import 'package:flutter/material.dart';
 
-/// A customizable dropdown search widget with animated opening and closing, search functionality,
-/// and optional highlighted matched text.
 class AnimatedDropdownSearch extends StatefulWidget {
-  const AnimatedDropdownSearch({
+  const AnimatedDropdownSearch.multiple({
     super.key,
     required this.data,
-    required this.onSelected,
+    required this.onSelectedMultiple,
     this.hint,
+    this.onSelected,
     this.hintStyle,
     this.optionTextStyle,
     this.selectedHighlightColor,
@@ -20,13 +19,41 @@ class AnimatedDropdownSearch extends StatefulWidget {
     this.shouldHighlightMatchedText,
     this.matchedTextHighlightColor,
     this.enableAdaptivePositioning,
-  });
+    this.showSelectedOptions = true,
+  })  : assert(onSelected == null,
+            'onSelected is only allowed in the main selection constructor.'),
+        canSelectMultiple = true;
+
+  const AnimatedDropdownSearch({
+    super.key,
+    required this.data,
+    required this.onSelected,
+    this.hint,
+    this.onSelectedMultiple,
+    this.hintStyle,
+    this.optionTextStyle,
+    this.selectedHighlightColor,
+    this.enableSearch,
+    this.maxHeightForOptions,
+    this.scrollPercentageColorIndicator,
+    this.border,
+    this.minCharactersToHighlight,
+    this.shouldHighlightMatchedText,
+    this.matchedTextHighlightColor,
+    this.enableAdaptivePositioning,
+  })  : assert(onSelectedMultiple == null,
+            'onSelectedMultiple is only allowed in the multiple selection constructor.'),
+        canSelectMultiple = false,
+        showSelectedOptions = false;
 
   /// List of strings to display in the dropdown.
   final List<String> data;
 
   /// Callback function when an item is selected.
-  final Function(String val) onSelected;
+  final Function(String val)? onSelected;
+
+  /// Callback function when an item is selected.
+  final Function(List<String> values)? onSelectedMultiple;
 
   /// Placeholder text for the search field.
   final String? hint;
@@ -55,6 +82,12 @@ class AnimatedDropdownSearch extends StatefulWidget {
   /// Boolean to enable/disable highlighting matched text.
   final bool? shouldHighlightMatchedText;
 
+  /// Boolean to enable/disable highlighting matched text.
+  final bool showSelectedOptions;
+
+  /// Boolean to enable/disable multiple selection.
+  final bool canSelectMultiple;
+
   /// Maximum height for the options dropdown.
   final double? maxHeightForOptions;
 
@@ -76,6 +109,7 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
   String get query => _searchController.text.trim().toLowerCase();
   bool isOptionsOpen = false;
   String? selectedCity;
+  List<String> selectedCities = [];
   double scrollPercentage = 0;
   double percentage = 0;
 
@@ -127,6 +161,19 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
         return a.compareTo(b); // Alphabetical order
       });
     }
+    if (selectedCities.isNotEmpty) {
+      data.sort((a, b) {
+        if (selectedCities.contains(a) && selectedCities.contains(b)) {
+          return a.compareTo(b);
+        } else if (selectedCities.contains(a)) {
+          return -1;
+        } else if (selectedCities.contains(b)) {
+          return 1;
+        } else {
+          return a.compareTo(b);
+        }
+      });
+    }
 
     if (position != null && widget.enableAdaptivePositioning == true) {
       if ((height - position.dy) < maxHeight) {
@@ -135,10 +182,10 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
     }
 
     final double? bottom =
-        shouldDisplayTop ? height - (position?.dy ?? 0) - 10 : null;
+        shouldDisplayTop ? height - (position!.dy) - 10 : null;
     final double? top = shouldDisplayTop
         ? null
-        : position != null && isOptionsOpen && position.dy > 0
+        : isOptionsOpen && position!.dy > 0
             ? (position.dy + 50)
             : null;
     return Column(
@@ -166,7 +213,7 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
                   ),
                   child: hasNoResults
                       ? noResultsWidget(context)
-                      : optionsListviewWidget(data),
+                      : optionsListviewWidget(data, shouldDisplayTop),
                 );
               },
             ),
@@ -177,22 +224,55 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
     );
   }
 
-  Widget optionsListviewWidget(List<String> data) {
+  Widget optionsListviewWidget(List<String> data, bool shouldDisplayTop) {
     List<String> options = List.from(data);
-    // options.sort();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        scroolPercentageWidget(),
+        scroolPercentageWidget(shouldDisplayTop),
+        if (selectedCities.isNotEmpty && widget.showSelectedOptions)
+          const SizedBox(height: 4),
+        if (selectedCities.isNotEmpty && widget.showSelectedOptions)
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            height: 32,
+            child: ListView.separated(
+                separatorBuilder: (context, index) => const SizedBox(width: 8),
+                itemCount: selectedCities.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) => Container(
+                    decoration: BoxDecoration(
+                      color: Colors.yellow.shade700,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(selectedCities[index]),
+                        const SizedBox(width: 4),
+                        const Icon(
+                          Icons.close,
+                          size: 16,
+                        )
+                      ],
+                    ))),
+          ),
+        if (selectedCities.isNotEmpty && widget.showSelectedOptions)
+          const SizedBox(height: 4),
         Expanded(
           child: ListView.builder(
             shrinkWrap: true,
             controller: _scrollController,
             padding: const EdgeInsets.all(8),
             itemBuilder: (context, index) {
-              final bool isSelected = options[index] == selectedCity;
+              final String dropDownValue = data[index];
+
+              final bool isSelected = options[index] == selectedCity ||
+                  selectedCities.contains(dropDownValue);
               final bool shouldHighlightText = (query.isNotEmpty &&
                       (query.length >=
                           (widget.minCharactersToHighlight ?? 3))) &&
@@ -205,13 +285,29 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
                 delay: Duration(milliseconds: index == 0 ? 0 : index * 20),
                 child: InkWell(
                   onTap: () {
-                    widget.onSelected(options[index]);
-                    setState(() {
-                      _tooltipController.toggle();
-                      isOptionsOpen = !isOptionsOpen;
-                      selectedCity = options[index];
-                      _searchController.text = selectedCity!;
-                    });
+                    if (!widget.canSelectMultiple) {
+                      widget.onSelected!(options[index]);
+                    }
+                    if (widget.canSelectMultiple) {
+                      if (!selectedCities.contains(dropDownValue)) {
+                        setState(() {
+                          selectedCities.add(dropDownValue);
+                        });
+                      } else {
+                        setState(() {
+                          selectedCities.remove(dropDownValue);
+                        });
+                      }
+                      // _searchController.text = selectedCities.join(',');
+                      widget.onSelectedMultiple!(selectedCities);
+                    } else {
+                      setState(() {
+                        _tooltipController.toggle();
+                        isOptionsOpen = !isOptionsOpen;
+                        selectedCity = options[index];
+                        _searchController.text = selectedCity!;
+                      });
+                    }
                   },
                   borderRadius: BorderRadius.circular(10),
                   child: optionsCard(
@@ -228,6 +324,7 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
 
   TextFormField searchFieldWidget() {
     return TextFormField(
+      key: _searchFieldKey,
       readOnly: widget.enableSearch != true,
       focusNode: _searchFieldFocusNode,
       controller: _searchController,
@@ -235,6 +332,7 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
       onTapAlwaysCalled: true,
       onTap: () {
         setState(() {
+          _tooltipController.toggle();
           isOptionsOpen = !isOptionsOpen;
         });
       },
@@ -242,15 +340,18 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
           suffixIcon: isOptionsOpen
               ? IconButton(
                   onPressed: () {
-                    if (query.isNotEmpty) {
+                    if (query.isNotEmpty || selectedCities.isNotEmpty) {
                       setState(() {
                         selectedCity = null;
                         _searchController.clear();
+                        selectedCities.clear();
                       });
                     } else {
                       setState(() {
+                        _tooltipController.toggle();
                         _searchFieldFocusNode.unfocus();
                         _searchController.clear();
+
                         selectedCity = null;
                         isOptionsOpen = !isOptionsOpen;
                       });
@@ -261,7 +362,7 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
           fillColor: Colors.white,
           filled: true,
           hintStyle: widget.hintStyle,
-          hintText: widget.hint,
+          hintText: selectedCities.isEmpty ? widget.hint : null,
           errorBorder: OutlineInputBorder(
               borderSide: const BorderSide(color: Colors.red),
               borderRadius: BorderRadius.circular(10)),
@@ -280,7 +381,7 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
     );
   }
 
-  LayoutBuilder scroolPercentageWidget() {
+  LayoutBuilder scroolPercentageWidget(bool shouldDisplayTop) {
     return LayoutBuilder(builder: (context, constraints) {
       double widthPrecentage =
           (scrollPercentage / 100) * (constraints.maxWidth);
@@ -289,9 +390,8 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
       }
 
       return Container(
-        margin: const EdgeInsets.only(top: 15),
         clipBehavior: Clip.none,
-        height: 45,
+        height: 5,
         width: percentage,
         decoration: BoxDecoration(
           color: widget.scrollPercentageColorIndicator ?? Colors.yellow[700],
@@ -302,37 +402,69 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
   }
 
   Card optionsCard(
-      bool isSelected, bool shouldHighlightText, List<String> data, int index) {
+    bool isSelected,
+    bool shouldHighlightText,
+    List<String> data,
+    int index,
+  ) {
+    final String dropDownValue = data[index];
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       clipBehavior: Clip.antiAlias,
       color: Colors.white,
-      child: Row(
-        children: [
-          if (isSelected)
-            Container(
-              decoration: BoxDecoration(
-                color: widget.selectedHighlightColor ?? Colors.yellow[700],
-                borderRadius: BorderRadius.circular(8),
+      child: IntrinsicHeight(
+        child: Row(
+          mainAxisAlignment: widget.canSelectMultiple
+              ? MainAxisAlignment.spaceBetween
+              : MainAxisAlignment.start,
+          children: [
+            if (isSelected)
+              Container(
+                decoration: BoxDecoration(
+                  color: widget.selectedHighlightColor ?? Colors.yellow[700],
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                width: 5,
+                // height: 48,
               ),
-              width: 5,
-              height: 48,
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: shouldHighlightText
+                  ? Text.rich(highlightQueryInString(query, dropDownValue,
+                      widget.matchedTextHighlightColor ?? Colors.red))
+                  : Text(
+                      dropDownValue,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: widget.optionTextStyle ??
+                          TextStyle(
+                            fontWeight: isSelected
+                                ? FontWeight.bold
+                                : FontWeight.normal,
+                          ),
+                    ),
             ),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: shouldHighlightText
-                ? Text.rich(highlightQueryInString(query, data[index],
-                    widget.matchedTextHighlightColor ?? Colors.red))
-                : Text(
-                    data[index],
-                    style: widget.optionTextStyle ??
-                        TextStyle(
-                          fontWeight:
-                              isSelected ? FontWeight.bold : FontWeight.normal,
-                        ),
-                  ),
-          ),
-        ],
+            if (widget.canSelectMultiple == true) const Spacer(),
+            if (widget.canSelectMultiple == true)
+              Checkbox(
+                  value: selectedCities.contains(dropDownValue),
+                  onChanged: (val) {
+                    if (widget.onSelectedMultiple == null) {
+                      throw ReceiverFunctionNotProvidedException();
+                    }
+                    if (val == true) {
+                      setState(() {
+                        selectedCities.add(dropDownValue);
+                      });
+                    } else {
+                      setState(() {
+                        selectedCities.remove(dropDownValue);
+                      });
+                    }
+                    widget.onSelectedMultiple!(selectedCities);
+                  })
+          ],
+        ),
       ),
     );
   }
@@ -374,7 +506,9 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
       // Add the matched part with the highlight color
       spans.add(TextSpan(
         text: target.substring(index, index + query.length),
-        style: TextStyle(backgroundColor: highlightColor),
+        style: TextStyle(
+          backgroundColor: highlightColor,
+        ),
       ));
 
       // Move the start index past the matched part
@@ -382,5 +516,18 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
     }
 
     return TextSpan(children: spans);
+  }
+}
+
+class ReceiverFunctionNotProvidedException implements Exception {
+  final String message;
+
+  ReceiverFunctionNotProvidedException(
+      [this.message =
+          'Receiver function must be provided when canSelectMultiple is true.']);
+
+  @override
+  String toString() {
+    return "ReceiverFunctionNotProvidedException: $message";
   }
 }

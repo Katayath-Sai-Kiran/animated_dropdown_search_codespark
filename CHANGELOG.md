@@ -1,7 +1,96 @@
 Here is a changelog for your Animated Dropdown Search package:
 
 # Changelog
+# Changelog
 
+# Changelog
+
+### [2.0.0] - 2024-06-12
+
+#### Added
+- **Multiple Selection Mode:**
+  - **Feature:** Introduced a boolean `multiple` constructor to distinguish between single and multiple selection modes.
+  - **Details:** Added a new constructor `AnimatedDropdownSearch.multiple` specifically for multiple selection.
+  - **Functionality:** Implemented the `onSelectedMultiple` callback to handle multiple selections, making it required in the multiple selection constructor.
+
+#### Changed
+- **Constructor Assertions:**
+  - **Improvement:** Updated constructor assertions to ensure `onSelected` is only allowed in the single selection constructor and `onSelectedMultiple` is only allowed in the multiple selection constructor.
+- **Logic Enhancement:**
+  - **Functionality:** Refined internal logic to handle sorting and highlighting of options in both single and multiple selection modes.
+- **Widget Methods:**
+  - **Improvement:** Modified `optionsListviewWidget` and `optionsCard` methods to support both single and multiple selection scenarios.
+- **Search Field Behavior:**
+  - **Improvement:** Enhanced `searchFieldWidget` to correctly toggle and clear selections in both single and multiple selection modes.
+
+#### Fixed
+- **Dropdown Closure:**
+  - **Bugfix:** Corrected an issue where the dropdown would not close properly after a selection in multiple selection mode.
+- **Text Highlighting:**
+  - **Bugfix:** Addressed a bug causing incorrect highlighting of matched text under certain conditions.
+
+#### Example Usage
+```dart
+// Single selection mode
+AnimatedDropdownSearch(
+  data: ['Option 1', 'Option 2', 'Option 3'],
+  onSelected: (val) {
+    print('Selected: $val');
+  },
+  hint: 'Select an option',
+);
+
+// Multiple selection mode
+AnimatedDropdownSearch.multiple(
+  data: ['Option 1', 'Option 2', 'Option 3'],
+  onSelectedMultiple: (values) {
+    print('Selected values: $values');
+  },
+  hint: 'Select options',
+);
+```
+
+### [1.0.7]
+
+- **Fixed Screenshots:** Fixed screenshots rendering issue
+
+### [1.0.6]
+
+- **Fixed Screenshots:** Fixed screenshots rendering issue
+
+### [1.0.5]
+
+- **Fixed Screenshots:** Fixed screenshots rendering issue
+
+### [1.0.4]
+
+- **Fixed Screenshots:** Fixed screenshots rendering issue
+
+### [1.0.3]
+
+- **Fixed Screenshots:** Fixed screenshots rendering issue
+
+### [1.0.2]
+
+- **Fixed Screenshots:** Fixed screenshots rendering issue
+
+### [1.0.1]
+
+- **Fixed Screenshots:** Fixed screenshots rendering issue
+
+### [1.0.0]
+
+1. **Adaptive Dropdown Positioning:**
+   - **Feature:** The dropdown menu now adjusts its position to display either above or below the search field based on the available space.
+   - **Details:** Implemented logic to determine the position of the search field and decide if the dropdown should be displayed at the top or bottom to maximize visibility and usability.
+
+2. **Overlay Support:**
+   - **Feature:** Integrated overlay support to ensure the dropdown menu appears on top of other widgets.
+   - **Details:** Utilized `OverlayPortalController` for managing the visibility of the dropdown menu, providing a seamless user experience where the dropdown remains accessible and visible regardless of other UI elements.
+
+### [0.1.0]
+
+- **Bug Fixes**: Addressed and resolved various bugs to improve the stability and performance of the `AnimatedDropdownSearch` package.
 
 ### [1.0.7]
 
