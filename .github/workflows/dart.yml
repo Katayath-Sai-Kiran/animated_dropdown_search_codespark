@@ -1,56 +1,45 @@
-
-
-
-# .github/workflows/publish.yml
 name: Publish to pub.dev
 
 on:
   push:
+    branches:
+      - master
     tags:
-    - '2.0.*' # tag pattern on pub.dev: 'v{{version}'
+      - '2.0.*' # Matches semantic versioning tags like v1.0.0
 
-# Publish using custom workflow
 jobs:
   publish:
     permissions:
       id-token: write # Required for authentication using OIDC
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
-      - uses: dart-lang/setup-dart@v1
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.22.0'
+
       - name: Install dependencies
-        run: dart pub get
-      # Here you can insert custom steps you need
-      # - run: dart tool/generate-code.dart
+        run: flutter pub get
+
+      - name: Analyze
+        run: flutter analyze
+
+      - name: Run tests
+        run: flutter test
+
+      - name: Format code
+        run: dart format --fix
+
+      - name: Check Publish Warnings
+        run: dart pub publish --dry-run
+
       - name: Publish
-        run: dart pub publish --force
-
-# on:
-#   push:
-#     branches:
-#       - master
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v2
-#       - name: Install Flutter
-#         uses: subosito/flutter-action@v2
-#         with:
-#           flutter-version: '3.22.0'
-#       - name: Install dependencies
-#         run: flutter pub get
-    
-      
-#         run: dart format --fix
-#       - name: Check Publish Warnings
-#         run: dart pub publish --dry-run
-        
-#       - name: Publish
-#         uses: k-paxian/dart-package-publisher@v1.5.1
-#         with:
-#           credentialJson: ${{ secrets.CREDIENTIALS_JSON }}
-#           flutter: true
-#           skipTests: true
-
-
+        uses: k-paxian/dart-package-publisher@v1.5.1
+        with:
+          credentialJson: ${{ secrets.CREDENTIAL_JSON }}
+          flutter: true
+          skipTests: true
