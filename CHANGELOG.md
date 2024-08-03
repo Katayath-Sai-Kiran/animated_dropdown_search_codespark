@@ -1,9 +1,5 @@
-Here is a changelog for your Animated Dropdown Search package:
-
-# Changelog
 # Changelog
 
-# Changelog
 
 ### [2.0.0] - 2024-06-12
 

@@ -26,39 +26,41 @@ flutter:
 
 screenshots:
 
-  - description: 'Matched Highlight in Options - Highlight matched text within dropdown options, making it easier for users to find relevant selections quickly.'
-    path: assets/screenshot1.png
+  - description: 'Multiple Selection Dropdown - Demonstrates the functionality of selecting multiple options within the dropdown, allowing users to choose more than one item from the list.'
+    path: assets/300x650-02.png
     width: 300
 
-  - description: 'Home - The home screen of the application, providing an overview of features and functionalities available to the user.'
-    path: assets/screenshot4.png
+  - description: 'Selected Dropdown Values and Options - Displays the selected values in the dropdown along with the available options, providing a clear view of the user selections and remaining choices.'
+    path: assets/300x650-03.png
     width: 300
 
-  - description: 'Home Focused - The home screen with a focused state, highlighting the currently active or selected feature for better user guidance.'
-    path: assets/screenshot5.png
+  - description: 'Single Selection Dropdown - Showcases the single selection dropdown functionality, where users can select only one option from the list at a time.'
+    path: assets/300x650-05.png
     width: 300
 
-  - description: 'Selected Highlighted - An option in the dropdown is selected and highlighted, providing visual feedback to the user on their selection.'
-    path: assets/screenshot6.png
+  - description: 'Search in Multi Select Dropdown and Highlighted Options Matched - Highlights the matched text within the options during a search in the multi-select dropdown.'
+    path: assets/300x650-06.png
     width: 300
 
-  - description: 'Scroll Percentage Indicator - A scroll percentage indicator is shown, giving users a visual cue of their current scroll position within the options list.'
-    path: assets/screenshot7.png
+  - description: 'Selected Option Highlight in Single Select Dropdown - Highlights the selected option in the single select dropdown, providing visual feedback to the user on their selection.'
+    path: assets/300x650-07.png
     width: 300
 
-  - description: 'Adaptive Options Placement - Demonstrates dropdown options appearing at the top or bottom based on the available screen space.'
-    path: assets/screenshot8.png
-    width: 300
+  
+    
+
+
+ 
 
 
 
 topics:
 
   - dropdownmenu
-  - animation
-  - searchfunctionality
+  - multiselectdropdown
+  - search
   - highlighting
-  - sorting
+  - animateddropdown
 
 
   # For details regarding assets in packages, see

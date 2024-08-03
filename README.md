@@ -23,11 +23,11 @@ The Animated Dropdown Search package is a customizable Flutter widget that allow
 
 ## Screenshot
 
-<img src="https://raw.githubusercontent.com/Katayath-Sai-Kiran/read_more_codespark/main/assets/300x650-02.png" alt="Screenshot 1" width="150"/>
-<img src="https://raw.githubusercontent.com/Katayath-Sai-Kiran/read_more_codespark/main/assets/300x650-03.png" alt="Screenshot 2" width="150"/>
-<img src="https://raw.githubusercontent.com/Katayath-Sai-Kiran/read_more_codespark/main/assets/300x650-05.png" alt="Screenshot 3" width="150"/>
-<img src="https://raw.githubusercontent.com/Katayath-Sai-Kiran/read_more_codespark/main/assets/300x650-06.png" alt="Screenshot 4" width="150"/>
-<img src="https://raw.githubusercontent.com/Katayath-Sai-Kiran/read_more_codespark/main/assets/300x650-07.png" alt="Screenshot 5" width="150"/>
+<img src="https://raw.githubusercontent.com/Katayath-Sai-Kiran/animated_dropdown_search_codespark/main/assets/300x650-02.png" alt="Screenshot 1" width="150"/>
+<img src="https://raw.githubusercontent.com/Katayath-Sai-Kiran/animated_dropdown_search_codespark/main/assets/300x650-03.png" alt="Screenshot 2" width="150"/>
+<img src="https://raw.githubusercontent.com/Katayath-Sai-Kiran/animated_dropdown_search_codespark/main/assets/300x650-05.png" alt="Screenshot 3" width="150"/>
+<img src="https://raw.githubusercontent.com/Katayath-Sai-Kiran/animated_dropdown_search_codespark/main/assets/300x650-06.png" alt="Screenshot 4" width="150"/>
+<img src="https://raw.githubusercontent.com/Katayath-Sai-Kiran/animated_dropdown_search_codespark/main/assets/300x650-07.png" alt="Screenshot 5" width="150"/>
 
 ## Installation
 
@@ -181,6 +181,7 @@ import 'package:animated_dropdown_search_codespark/animated_dropdown_search_code
 void main() {
   runApp(MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   @override
