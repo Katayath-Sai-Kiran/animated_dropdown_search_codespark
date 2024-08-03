@@ -1,9 +1,9 @@
 # Changelog
 
 
-### [2.0.0] - 2024-06-12
-### [2.0.0] - 2024-06-12
-### [2.0.0] - 2024-06-12
+### [2.0.1] - 2024-08-03
+- **Setup for CI/CD Pipeline:**
+
 
 #### Added
 - **Multiple Selection Mode:**
