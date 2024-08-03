@@ -1,0 +1,30 @@
+name: Publish to pub.dev
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.3.10'  # Specify the version of Flutter you are using
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build the package
+        run: flutter pub publish --dry-run
+
+      - name: Publish to pub.dev
+        env:
+          PUB_DEV_TOKEN: ${{ secrets.PUB_DEV_TOKEN }}
+        run: echo $PUB_DEV_TOKEN | flutter pub publish --force
