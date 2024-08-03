@@ -1,10 +1,14 @@
 # Changelog
 
 
+### [2.0.2] - 2024-08-03
+- **fixed screenshots description char length issue:**
+
 ### [2.0.1] - 2024-08-03
 - **Setup for CI/CD Pipeline:**
 
 
+### [2.0.0] - 2024-08-03
 #### Added
 - **Multiple Selection Mode:**
   - **Feature:** Introduced a boolean `multiple` constructor to distinguish between single and multiple selection modes.
