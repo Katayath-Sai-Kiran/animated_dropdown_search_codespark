@@ -1,7 +1,7 @@
 name: animated_dropdown_search_codespark
 description: "Empower your app with a sophisticated dropdown widget, featuring search and highlighting."
 
-version: 2.0.1
+version: 2.0.2
 homepage: https://github.com/Katayath-Sai-Kiran/animated_dropdown_search_codespark
 
 environment:
@@ -26,11 +26,11 @@ flutter:
 
 screenshots:
 
-  - description: 'Multiple Selection Dropdown - Demonstrates the functionality of selecting multiple options within the dropdown, allowing users to choose more than one item from the list.'
+  - description: 'Multiple Selection Dropdown - Demonstrates the functionality of selecting multiple options within the dropdown, allowing users to choose more than one item.'
     path: assets/300x650-02.png
     width: 300
 
-  - description: 'Selected Dropdown Values and Options - Displays the selected values in the dropdown along with the available options, providing a clear view of the user selections and remaining choices.'
+  - description: 'Selected Dropdown Values and Options - Displays the selected values in the dropdown along with the available options.'
     path: assets/300x650-03.png
     width: 300
 
@@ -42,7 +42,7 @@ screenshots:
     path: assets/300x650-06.png
     width: 300
 
-  - description: 'Selected Option Highlight in Single Select Dropdown - Highlights the selected option in the single select dropdown, providing visual feedback to the user on their selection.'
+  - description: 'Selected Option Highlight in Single Select Dropdown - Highlights the selected option in the single select dropdown, providing visual feedback to the user.'
     path: assets/300x650-07.png
     width: 300
 
