@@ -1,33 +1,56 @@
+
+
+
+# .github/workflows/publish.yml
 name: Publish to pub.dev
 
 on:
   push:
-    branches:
-      - master
+    tags:
+    - '2.0.*' # tag pattern on pub.dev: 'v{{version}'
+
+# Publish using custom workflow
 jobs:
-  build:
+  publish:
+    permissions:
+      id-token: write # Required for authentication using OIDC
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Install Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.22.0'
+      - uses: actions/checkout@v3
+      - uses: dart-lang/setup-dart@v1
       - name: Install dependencies
-        run: flutter pub get
-      - name: Analyze
-        run: flutter analyze
-      - name: Run tests
-        run: flutter test
-      - name: Format code
-        run: dart format --fix
-      - name: Check Publish Warnings
-        run: dart pub publish --dry-run
+        run: dart pub get
+      # Here you can insert custom steps you need
+      # - run: dart tool/generate-code.dart
       - name: Publish
-        uses: k-paxian/dart-package-publisher@v1.5.1
-        with:
-          credentialJson: ${{ secrets.CREDIENTIALS_JSON }}
-          flutter: true
-          skipTests: true
+        run: dart pub publish --force
+
+# on:
+#   push:
+#     branches:
+#       - master
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: Install Flutter
+#         uses: subosito/flutter-action@v2
+#         with:
+#           flutter-version: '3.22.0'
+#       - name: Install dependencies
+#         run: flutter pub get
+    
+      
+#         run: dart format --fix
+#       - name: Check Publish Warnings
+#         run: dart pub publish --dry-run
+        
+#       - name: Publish
+#         uses: k-paxian/dart-package-publisher@v1.5.1
+#         with:
+#           credentialJson: ${{ secrets.CREDIENTIALS_JSON }}
+#           flutter: true
+#           skipTests: true
 
 
