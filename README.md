@@ -1,5 +1,7 @@
 
 # Animated Dropdown Search
+# Animated Dropdown Search
+# Animated Dropdown Search
 
 The Animated Dropdown Search package is a customizable Flutter widget that allows users to search and select from a list of options with a smooth animation. This package is perfect for applications that need an elegant and user-friendly dropdown search functionality.
 
