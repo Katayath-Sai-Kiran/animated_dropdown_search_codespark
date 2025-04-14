@@ -2,7 +2,9 @@
 
 
 
-### [2.1.0] - 14-04-2000
+### [2.1.0+alignment] - 14-04-2025
+ - Fixed Alignment
+### [2.1.0] - 14-04-2025
 ## 📦 What's New in
 
 This version introduces several new customization options and improvements to the `AnimatedDropdownSearch` package:

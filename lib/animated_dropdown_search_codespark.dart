@@ -264,7 +264,7 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
     List<String> options = List.from(data);
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
         scroolPercentageWidget(shouldDisplayTop),
@@ -311,64 +311,70 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
         if (selectedCities.isNotEmpty && widget.showSelectedOptions)
           const SizedBox(height: 4),
         Expanded(
-          child: ListView.builder(
-            shrinkWrap: true,
-            controller: _scrollController,
-            padding: const EdgeInsets.all(8),
-            itemBuilder: (context, index) {
-              final String dropDownValue = data[index];
+          child: SizedBox(
+            width: widget.width,
+            child: Center(
+              child: ListView.builder(
+                shrinkWrap: true,
+                controller: _scrollController,
+                padding: const EdgeInsets.all(8),
+                itemBuilder: (context, index) {
+                  final String dropDownValue = data[index];
 
-              final bool isSelected = options[index] == selectedCity ||
-                  selectedCities.contains(dropDownValue);
-              final bool shouldHighlightText = (query.isNotEmpty &&
-                      (query.length >=
-                          (widget.minCharactersToHighlight ?? 3))) &&
-                  widget.shouldHighlightMatchedText == true &&
-                  !isSelected;
+                  final bool isSelected = options[index] == selectedCity ||
+                      selectedCities.contains(dropDownValue);
+                  final bool shouldHighlightText = (query.isNotEmpty &&
+                          (query.length >=
+                              (widget.minCharactersToHighlight ?? 3))) &&
+                      widget.shouldHighlightMatchedText == true &&
+                      !isSelected;
 
-              return Entry.offset(
-                yOffset: widget.shouldAnimate
-                    ? index == 0
-                        ? 0
-                        : 5
-                    : 0,
-                key: widget.shouldAnimate ? UniqueKey() : null,
-                delay: Duration(
-                    milliseconds:
-                        (index == 0 || !widget.shouldAnimate) ? 0 : index * 20),
-                child: InkWell(
-                  onTap: () {
-                    if (!widget.canSelectMultiple) {
-                      widget.onSelected!(options[index]);
-                    }
-                    if (widget.canSelectMultiple) {
-                      if (!selectedCities.contains(dropDownValue)) {
-                        setState(() {
-                          selectedCities.add(dropDownValue);
-                        });
-                      } else {
-                        setState(() {
-                          selectedCities.remove(dropDownValue);
-                        });
-                      }
-                      // _searchController.text = selectedCities.join(',');
-                      widget.onSelectedMultiple!(selectedCities);
-                    } else {
-                      setState(() {
-                        _tooltipController.toggle();
-                        isOptionsOpen = !isOptionsOpen;
-                        selectedCity = options[index];
-                        _searchController.text = selectedCity!;
-                      });
-                    }
-                  },
-                  borderRadius: BorderRadius.circular(10),
-                  child: optionsCard(
-                      isSelected, shouldHighlightText, options, index),
-                ),
-              );
-            },
-            itemCount: data.length,
+                  return Entry.offset(
+                    yOffset: widget.shouldAnimate
+                        ? index == 0
+                            ? 0
+                            : 5
+                        : 0,
+                    key: widget.shouldAnimate ? UniqueKey() : null,
+                    delay: Duration(
+                        milliseconds: (index == 0 || !widget.shouldAnimate)
+                            ? 0
+                            : index * 20),
+                    child: InkWell(
+                      onTap: () {
+                        if (!widget.canSelectMultiple) {
+                          widget.onSelected!(options[index]);
+                        }
+                        if (widget.canSelectMultiple) {
+                          if (!selectedCities.contains(dropDownValue)) {
+                            setState(() {
+                              selectedCities.add(dropDownValue);
+                            });
+                          } else {
+                            setState(() {
+                              selectedCities.remove(dropDownValue);
+                            });
+                          }
+                          // _searchController.text = selectedCities.join(',');
+                          widget.onSelectedMultiple!(selectedCities);
+                        } else {
+                          setState(() {
+                            _tooltipController.toggle();
+                            isOptionsOpen = !isOptionsOpen;
+                            selectedCity = options[index];
+                            _searchController.text = selectedCity!;
+                          });
+                        }
+                      },
+                      borderRadius: BorderRadius.circular(10),
+                      child: optionsCard(
+                          isSelected, shouldHighlightText, options, index),
+                    ),
+                  );
+                },
+                itemCount: data.length,
+              ),
+            ),
           ),
         ),
       ],
