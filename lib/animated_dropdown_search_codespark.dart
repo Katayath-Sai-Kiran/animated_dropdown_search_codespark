@@ -25,8 +25,14 @@ class AnimatedDropdownSearch extends StatefulWidget {
     this.width,
     this.fillColor,
     this.filled = true,
-    this.optionsAlignment = Alignment.center,
+    this.optionsAlignment = Alignment.topCenter,
     this.showSelectedOptions = true,
+    this.overlayBackgroundColor,
+    this.cursorColor,
+    this.cursorHeight,
+    this.cursorWidth,
+    this.highlghtedTextColor,
+    this.optionTileColor = Colors.white,
   })  : assert(onSelected == null,
             'onSelected is only allowed in the main selection constructor.'),
         canSelectMultiple = true;
@@ -53,8 +59,14 @@ class AnimatedDropdownSearch extends StatefulWidget {
     this.searchFocusNode,
     this.fillColor,
     this.filled = true,
-    this.optionsAlignment = Alignment.center,
+    this.optionsAlignment = Alignment.topCenter,
     this.width,
+    this.overlayBackgroundColor,
+    this.cursorColor,
+    this.cursorHeight,
+    this.cursorWidth,
+    this.highlghtedTextColor,
+    this.optionTileColor = Colors.white,
   })  : assert(onSelectedMultiple == null,
             'onSelectedMultiple is only allowed in the multiple selection constructor.'),
         canSelectMultiple = false,
@@ -129,8 +141,26 @@ class AnimatedDropdownSearch extends StatefulWidget {
   /// Fill color for the search field. Defaults to white.
   final Color? fillColor;
 
-  /// Alignment for the options list view. Defaults to Alignment.center.
+  /// Alignment for the options list view. Defaults to Alignment.topCenter.
   final Alignment optionsAlignment;
+
+  /// The background color of the overlay that appears beneath the dropdown or options list.
+  final Color? overlayBackgroundColor;
+
+  /// The color of the text cursor within the input field.
+  final Color? cursorColor;
+
+  /// The width of the text cursor.
+  final double? cursorWidth;
+
+  /// The height of the text cursor.
+  final double? cursorHeight;
+
+  /// The color used to highlight matching search results in the options list.
+  final Color? highlghtedTextColor;
+
+  /// The background color of each option tile in the dropdown list.
+  final Color optionTileColor;
 
   @override
   State<AnimatedDropdownSearch> createState() => _AnimatedDropdownSearchState();
@@ -227,7 +257,7 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
       children: [
         OverlayPortal(
           controller: _tooltipController,
-          overlayChildBuilder: (context) => Positioned(
+          overlayChildBuilder: (context) => Positioned.fill(
             left: 0,
             right: 0,
             bottom: bottom,
@@ -238,18 +268,25 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
                   begin: isOptionsOpen ? 0 : maxHeight,
                   end: isOptionsOpen ? maxHeight : 0),
               builder: (context, value, child) {
-                return Container(
-                  width: widget.width,
-                  margin: const EdgeInsets.all(16),
-                  clipBehavior: Clip.antiAlias,
-                  constraints: BoxConstraints(maxHeight: value),
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade300,
-                    borderRadius: BorderRadius.circular(10),
+                final double dynamicHeight = (data.length * 50) + 100;
+                return Center(
+                  child: Container(
+                    width: widget.width,
+                    alignment: widget.optionsAlignment,
+                    margin: const EdgeInsets.all(16),
+                    clipBehavior: Clip.antiAlias,
+                    constraints: BoxConstraints(
+                        maxHeight:
+                            dynamicHeight > value ? value : dynamicHeight),
+                    decoration: BoxDecoration(
+                      color:
+                          widget.overlayBackgroundColor ?? Colors.grey.shade300,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: hasNoResults
+                        ? noResultsWidget(context)
+                        : optionsListviewWidget(data, shouldDisplayTop),
                   ),
-                  child: hasNoResults
-                      ? noResultsWidget(context)
-                      : optionsListviewWidget(data, shouldDisplayTop),
                 );
               },
             ),
@@ -264,8 +301,9 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
     List<String> options = List.from(data);
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         scroolPercentageWidget(shouldDisplayTop),
         if (selectedCities.isNotEmpty && widget.showSelectedOptions)
@@ -311,9 +349,10 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
         if (selectedCities.isNotEmpty && widget.showSelectedOptions)
           const SizedBox(height: 4),
         Expanded(
-          child: SizedBox(
-            width: widget.width,
-            child: Center(
+          child: Align(
+            alignment: widget.optionsAlignment,
+            child: SizedBox(
+              width: widget.width,
               child: ListView.builder(
                 shrinkWrap: true,
                 controller: _scrollController,
@@ -384,10 +423,13 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
   TextFormField searchFieldWidget() {
     return TextFormField(
       key: _searchFieldKey,
+      cursorHeight: widget.cursorHeight,
+      cursorWidth: widget.cursorWidth ?? 2,
       readOnly: widget.enableSearch != true,
       focusNode: widget.searchFocusNode ?? _searchFieldFocusNode,
       controller: widget.searchController ?? _searchController,
       onChanged: (val) => setState(() {}),
+      cursorColor: widget.cursorColor ?? Colors.black,
       onTapAlwaysCalled: true,
       onTap: () {
         setState(() {
@@ -473,6 +515,7 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
       color: Colors.white,
       child: IntrinsicHeight(
         child: Row(
+          mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: widget.canSelectMultiple
               ? MainAxisAlignment.spaceBetween
               : MainAxisAlignment.start,
@@ -546,35 +589,45 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
       String query, String target, Color highlightColor) {
     List<TextSpan> spans = [];
     int startIndex = 0;
-
+    final preferedTextstyle = widget.optionTextStyle
+            ?.copyWith(color: Colors.black, letterSpacing: 1.5) ??
+        const TextStyle(color: Colors.black, letterSpacing: 1.5);
     while (startIndex < target.length) {
       // Find the start index of the next occurrence of the query in the target string
       int index = target.toLowerCase().indexOf(query.toLowerCase(), startIndex);
 
       if (index == -1) {
         // If no more matches, add the remaining part of the target string
-        spans.add(TextSpan(text: target.substring(startIndex)));
+        spans.add(TextSpan(
+            text: target.substring(startIndex), style: preferedTextstyle));
         break;
       }
 
       // Add the text before the match
       if (index > startIndex) {
-        spans.add(TextSpan(text: target.substring(startIndex, index)));
+        spans.add(TextSpan(
+            text: target.substring(startIndex, index),
+            style: preferedTextstyle));
       }
 
       // Add the matched part with the highlight color
       spans.add(TextSpan(
         text: target.substring(index, index + query.length),
-        style: TextStyle(
-          backgroundColor: highlightColor,
-        ),
+        style: widget.optionTextStyle?.copyWith(
+                backgroundColor: highlightColor,
+                color: widget.highlghtedTextColor,
+                letterSpacing: 1.2) ??
+            TextStyle(
+                backgroundColor: highlightColor,
+                color: widget.highlghtedTextColor,
+                letterSpacing: 1.2),
       ));
 
       // Move the start index past the matched part
       startIndex = index + query.length;
     }
 
-    return TextSpan(children: spans);
+    return TextSpan(children: spans, style: widget.optionTextStyle?.copyWith());
   }
 }
 
