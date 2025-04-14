@@ -1,6 +1,32 @@
 # Changelog
 
 
+
+### [2.1.0] - 14-04-2000
+## 📦 What's New in
+
+This version introduces several new customization options and improvements to the `AnimatedDropdownSearch` package:
+
+- ✅ **Custom Input Border**  
+  Define a custom `InputBorder` for the search field using the `border` parameter.
+
+- 🎬 **Slide Animation Toggle**  
+  Use the `shouldAnimate` parameter to enable or disable slide animations on the dropdown options list.
+
+- 🎯 **Advanced Search Field Control**  
+  - `searchController`: Attach your own `TextEditingController` to the search field.  
+  - `searchFocusNode`: Attach a custom `FocusNode` for advanced focus handling.
+
+- 🧁 **Enhanced Search Field Styling**  
+  - `filled`: Enable or disable the filled style on the search field (defaults to `true`).  
+  - `fillColor`: Customize the fill color (defaults to `Colors.white`).
+
+- 🧲 **Dropdown Alignment**  
+  Set the alignment of the options list using `optionsAlignment` (defaults to `Alignment.center`).
+
+These additions offer even more flexibility for fine-tuning the dropdown UI and behavior to suit your app's design system and functionality requirements.
+
+
 ### [2.0.2] - 2024-08-03
 - **fixed screenshots description char length issue:**
 

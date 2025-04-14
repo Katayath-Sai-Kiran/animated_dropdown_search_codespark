@@ -19,6 +19,13 @@ class AnimatedDropdownSearch extends StatefulWidget {
     this.shouldHighlightMatchedText,
     this.matchedTextHighlightColor,
     this.enableAdaptivePositioning,
+    this.shouldAnimate = true,
+    this.searchController,
+    this.searchFocusNode,
+    this.width,
+    this.fillColor,
+    this.filled = true,
+    this.optionsAlignment = Alignment.center,
     this.showSelectedOptions = true,
   })  : assert(onSelected == null,
             'onSelected is only allowed in the main selection constructor.'),
@@ -41,6 +48,13 @@ class AnimatedDropdownSearch extends StatefulWidget {
     this.shouldHighlightMatchedText,
     this.matchedTextHighlightColor,
     this.enableAdaptivePositioning,
+    this.shouldAnimate = true,
+    this.searchController,
+    this.searchFocusNode,
+    this.fillColor,
+    this.filled = true,
+    this.optionsAlignment = Alignment.center,
+    this.width,
   })  : assert(onSelectedMultiple == null,
             'onSelectedMultiple is only allowed in the multiple selection constructor.'),
         canSelectMultiple = false,
@@ -91,11 +105,32 @@ class AnimatedDropdownSearch extends StatefulWidget {
   /// Maximum height for the options dropdown.
   final double? maxHeightForOptions;
 
+  /// Maximum width for the options dropdown.
+  final double? width;
+
   /// Minimum number of characters before highlighting matched text.
   final int? minCharactersToHighlight;
 
   /// Input border for the search field.
   final InputBorder? border;
+
+  /// Enables/disables slide animation on dropdown options. Defaults to true.
+  final bool shouldAnimate;
+
+  /// Controller for the search text field.
+  final TextEditingController? searchController;
+
+  /// Focus node for the search text field.
+  final FocusNode? searchFocusNode;
+
+  /// Determines whether the search field should be filled. Defaults to true.
+  final bool filled;
+
+  /// Fill color for the search field. Defaults to white.
+  final Color? fillColor;
+
+  /// Alignment for the options list view. Defaults to Alignment.center.
+  final Alignment optionsAlignment;
 
   @override
   State<AnimatedDropdownSearch> createState() => _AnimatedDropdownSearchState();
@@ -204,6 +239,7 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
                   end: isOptionsOpen ? maxHeight : 0),
               builder: (context, value, child) {
                 return Container(
+                  width: widget.width,
                   margin: const EdgeInsets.all(16),
                   clipBehavior: Clip.antiAlias,
                   constraints: BoxConstraints(maxHeight: value),
@@ -239,6 +275,7 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
             padding: const EdgeInsets.symmetric(horizontal: 12),
             height: 32,
             child: ListView.separated(
+                shrinkWrap: true,
                 separatorBuilder: (context, index) => const SizedBox(width: 8),
                 itemCount: selectedCities.length,
                 scrollDirection: Axis.horizontal,
@@ -290,9 +327,15 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
                   !isSelected;
 
               return Entry.offset(
-                yOffset: index == 0 ? 0 : 5,
-                key: UniqueKey(),
-                delay: Duration(milliseconds: index == 0 ? 0 : index * 20),
+                yOffset: widget.shouldAnimate
+                    ? index == 0
+                        ? 0
+                        : 5
+                    : 0,
+                key: widget.shouldAnimate ? UniqueKey() : null,
+                delay: Duration(
+                    milliseconds:
+                        (index == 0 || !widget.shouldAnimate) ? 0 : index * 20),
                 child: InkWell(
                   onTap: () {
                     if (!widget.canSelectMultiple) {
@@ -336,8 +379,8 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
     return TextFormField(
       key: _searchFieldKey,
       readOnly: widget.enableSearch != true,
-      focusNode: _searchFieldFocusNode,
-      controller: _searchController,
+      focusNode: widget.searchFocusNode ?? _searchFieldFocusNode,
+      controller: widget.searchController ?? _searchController,
       onChanged: (val) => setState(() {}),
       onTapAlwaysCalled: true,
       onTap: () {
@@ -369,8 +412,8 @@ class _AnimatedDropdownSearchState extends State<AnimatedDropdownSearch> {
                   },
                   icon: const Icon(Icons.close))
               : const Icon(Icons.keyboard_arrow_down_outlined),
-          fillColor: Colors.white,
-          filled: true,
+          fillColor: widget.fillColor ?? Colors.white,
+          filled: widget.filled,
           hintStyle: widget.hintStyle,
           hintText: selectedCities.isEmpty ? widget.hint : null,
           errorBorder: OutlineInputBorder(
