@@ -2,6 +2,18 @@
 
 
 
+### [2.2.0] - 14-04-2025
+
+## ✨ Added
+- Documentation comments for the following properties to improve IDE support and code readability:
+  - `overlayBackgroundColor`: Background color for the dropdown overlay.
+  - `cursorColor`: Color of the text cursor.
+  - `cursorWidth`: Width of the text cursor.
+  - `cursorHeight`: Height of the text cursor.
+  - `highlghtedTextColor`: Color used to highlight matched text in the dropdown list.
+  - `optionTileColor`: Background color for each option tile in the list.
+
+
 ### [2.1.1] - 14-04-2025
  - Fixed Alignment
 ### [2.1.0] - 14-04-2025
